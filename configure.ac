@@ -17,7 +17,13 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([dist-bzip2 tar-pax subdir-objects color-tests 1.16 foreign])
 AM_SILENT_RULES(yes) dnl # use silent rules - automake 1.16
 
-
+AC_PROG_EGREP
+AC_PROG_MKDIR_P
+AC_PROG_LN_S
+AC_PATH_PROGS(TAR,  [tar gtar])
+AC_PATH_PROGS(CURL, [curl])
+AC_PATH_PROGS(WGET, [wget])
+AC_PATH_PROGS(GIT,  [git])
 
 # "Precious" environment variables to control the build environment
 AC_ARG_VAR([GCC_VERSION], [requested GCC version. e.g. "10.4.0"])
@@ -29,9 +35,26 @@ AC_ARG_VAR([PETSC_VERSION], [requested PETSC version. e.g. "3.16.6" (or "disable
 AC_ARG_VAR([LIBMESH_VERSION], [requested LIBMESH version. e.g. "4.1.4" (or "disabled")])
 AC_ARG_VAR([TRILINOS_VERSION], [requested TRILINOS version. e.g. "13-0-1" (or "disabled")])
 
+#----------------------------------------------------------------------------
+# Preferred Default Versions (set-if-unset approach)
+GCC_VERSION="${GCC_VERSION:-9.5.0}"
+CMAKE_VERSION="${CMAKE_VERSION:-3.25.3}"
+HDF5_VERSION="${HDF5_VERSION:-1.10.6}"
+MPICH_VERSION="${MPICH_VERSION:-3.4.3}"
+OPENMPI_VERSION="${OPENMPI_VERSION:-disabled}"
+PETSC_VERSION="${PETSC_VERSION:-3.7.7}"
+LIBMESH_VERSION="${LIBMESH_VERSION:-1.6.2}"
+TRILINOS_VERSION="${TRILINOS_VERSION:-13-0-1}"
 
+COMPILER_ID_STRING="gcc-${GCC_VERSION}"
 
+MPI_FAMILY=""
+AS_IF([test "x${MPICH_VERSION}" != xdisabled], [MPI_ID_STRING="mpich-${MPICH_VERSION}"; MPI_FAMILY="mpich"])
+AS_IF([test "x${OPENMPI_VERSION}" != xdisabled], [MPI_ID_STRING="openmpi-${OPENMPI_VERSION}"; MPI_FAMILY="openmpi"])
 
+AC_SUBST([COMPILER_ID_STRING])
+AC_SUBST([MPI_FAMILY])
+AC_SUBST([MPI_ID_STRING])
 
 #
 # # Checks for programs.
@@ -148,6 +171,7 @@ AC_ARG_VAR([TRILINOS_VERSION], [requested TRILINOS version. e.g. "13-0-1" (or "d
 #
 AC_CONFIG_FILES([
   Makefile
+  build_config.sh
 ])
 
 

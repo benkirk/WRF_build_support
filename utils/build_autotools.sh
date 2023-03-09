@@ -37,7 +37,7 @@ versions[make]=4.3
 PATH=${inst_dir}/bin:$PATH
 
 #for PKG in "${!versions[@]}"; do
-for PKG in "m4" "autoconf" "automake" "libtool" "make"; do
+for PKG in "m4" "autoconf" "automake" "libtool"; do
 
     cd ${tmp_build_dir} && pwd || exit 1
 

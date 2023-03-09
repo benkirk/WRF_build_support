@@ -1,0 +1,34 @@
+# build_config.sh is generated automatically by ./configure fron build_config.sh.in
+
+#-------------------------------------------------------------------------------
+prefix=@prefix@
+
+#-------------------------------------------------------------------------------
+GCC_VERSION="@GCC_VERSION@"
+CMAKE_VERSION="@CMAKE_VERSION@"
+ZLIB_VERSION="@ZLIB_VERSION@"
+MPICH_VERSION="@MPICH_VERSION@"
+OPENMPI_VERSION="@OPENMPI_VERSION@"
+PETSC_VERSION="@PETSC_VERSION@"
+LIBMESH_VERSION="@LIBMESH_VERSION@"
+HDF5_VERSION="@HDF5_VERSION@"
+TRILINOS_VERSION="@TRILINOS_VERSION@"
+
+#-------------------------------------------------------------------------------
+COMPILER_ID_STRING="@COMPILER_ID_STRING@"
+MPI_ID_STRING="@MPI_ID_STRING@"
+
+
+#-------------------------------------------------------------------------------
+EGREP="@EGREP@"
+LN_S="@LN_S@"
+MKDIR_P="@MKDIR_P@"
+CURL="@CURL@"
+WGET="@WGET@"
+GIT="@GIT@"
+TAR="@TAR@"
+
+# Local Variables:
+# mode:shell-script
+# sh-indentation:2
+# End:
