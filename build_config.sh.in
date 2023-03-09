@@ -1,6 +1,12 @@
 # build_config.sh is generated automatically by ./configure fron build_config.sh.in
 
 #-------------------------------------------------------------------------------
+# clear all modules
+# this should be a no-op on systems without a 'module' command
+type module >/dev/null 2>&1 \
+    && module --force purge > /dev/null 2>&1
+
+#-------------------------------------------------------------------------------
 prefix=@prefix@
 
 #-------------------------------------------------------------------------------
