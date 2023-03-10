@@ -39,8 +39,8 @@ TAR="@TAR@"
 type nproc >/dev/null 2>&1 && MAKE_J_PROCS=$(nproc)
 MAKE_J_PROCS="${MAKE_J_PROCS:-6}"
 MAKE_J_PROCS=4
-
-
+MAKE_L_LOAD="$((${MAKE_J_PROCS} * 2)).0"
+MAKE_J_L="-j ${MAKE_J_PROCS} -l ${MAKE_L_LOAD}"
 
 #-------------------------------------------------------------------------------
 # paths - from configure
@@ -61,15 +61,15 @@ abs_top_srcdir=@abs_top_srcdir@
 
 #-------------------------------------------------------------------------------
 # paths - for builds
-[ "x${PKG}" != "x" ] && [ "x${PKG_VERSION}" != "x" ] && echo "Building ${PKG}-${PKG_VERSION} from source..." \
-    || { echo "PKG, PKG_VERSION not set!!"; exit 1; }
+[ "x${PKG}" != "x" ] && \
+  [ "x${PKG_VERSION}" != "x" ] && \
+  [ "x${PKG_INSTALL_PREFIX}" != "x" ] && \
+  echo "Building ${PKG}-${PKG_VERSION} from source, installing into ${PKG_INSTALL_PREFIX} ..." \
+    || { echo "PKG, PKG_VERSION, or PKG_INSTALL_PREFIX not set!!"; exit 1; }
 
+inst_dir=${PKG_INSTALL_PREFIX}
 top_dir=${abs_top_builddir}
 tmp_build_dir=${abs_builddir}/tmp_build_dir/${PKG}-${PKG_VERSION}
-inst_dir=${prefix}/${PKG}/${PKG_VERSION}
-
-[ "x${PKG_MPI_ID}" != "x" ] && { inst_dir="${inst_dir}-${PKG_MPI_ID}"; tmp_build_dir="${tmp_build_dir}-${PKG_MPI_ID}"; }
-[ "x${PKG_COMPILER_ID}" != "x" ] && { inst_dir="${inst_dir}-${PKG_COMPILER_ID}"; tmp_build_dir="${tmp_build_dir}-${PKG_COMPILER_ID}"; }
 
 echo "top_dir=${top_dir}"
 echo "tmp_build_dir=${tmp_build_dir}"
@@ -91,8 +91,22 @@ download_src ()
 }
 
 
+clean_build_tmp_dirs ()
+{
+  [ -d ${tmp_build_dir} ] && rm -rf ${tmp_build_dir}
+}
 
 
+list_build_env ()
+{
+  module list
+  printenv | sort | uniq | ${EGREP} -v "_git|_ModuleTable_|__"
+}
+
+
+
+
+#----------------------------------------------------------------------------
 # Local Variables:
 # mode:shell-script
 # sh-indentation:2
