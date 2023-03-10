@@ -7,9 +7,6 @@ type module >/dev/null 2>&1 \
     && module --force purge > /dev/null 2>&1
 
 #-------------------------------------------------------------------------------
-prefix=@prefix@
-
-#-------------------------------------------------------------------------------
 GCC_VERSION="@GCC_VERSION@"
 CMAKE_VERSION="@CMAKE_VERSION@"
 ZLIB_VERSION="@ZLIB_VERSION@"
@@ -19,6 +16,7 @@ PETSC_VERSION="@PETSC_VERSION@"
 LIBMESH_VERSION="@LIBMESH_VERSION@"
 HDF5_VERSION="@HDF5_VERSION@"
 TRILINOS_VERSION="@TRILINOS_VERSION@"
+
 
 #-------------------------------------------------------------------------------
 COMPILER_ID_STRING="@COMPILER_ID_STRING@"
@@ -33,6 +31,67 @@ CURL="@CURL@"
 WGET="@WGET@"
 GIT="@GIT@"
 TAR="@TAR@"
+
+
+
+#----------------------------------------------------------------------------
+# Build processes
+type nproc >/dev/null 2>&1 && MAKE_J_PROCS=$(nproc)
+MAKE_J_PROCS="${MAKE_J_PROCS:-6}"
+MAKE_J_PROCS=4
+
+
+
+#-------------------------------------------------------------------------------
+# paths - from configure
+prefix=@prefix@
+
+builddir=@builddir@
+abs_builddir=@abs_builddir@
+abs_top_builddir=@abs_top_builddir@
+
+srcdir=@srcdir@
+abs_srcdir=@abs_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# paths - for builds
+[ "x${PKG}" != "x" ] && [ "x${PKG_VERSION}" != "x" ] && echo "Building ${PKG}-${PKG_VERSION} from source..." \
+    || { echo "PKG, PKG_VERSION not set!!"; exit 1; }
+
+top_dir=${abs_top_builddir}
+tmp_build_dir=${abs_builddir}/tmp_build_dir/${PKG}-${PKG_VERSION}
+inst_dir=${prefix}/${PKG}/${PKG_VERSION}
+
+[ "x${PKG_MPI_ID}" != "x" ] && { inst_dir="${inst_dir}-${PKG_MPI_ID}"; tmp_build_dir="${tmp_build_dir}-${PKG_MPI_ID}"; }
+[ "x${PKG_COMPILER_ID}" != "x" ] && { inst_dir="${inst_dir}-${PKG_COMPILER_ID}"; tmp_build_dir="${tmp_build_dir}-${PKG_COMPILER_ID}"; }
+
+echo "top_dir=${top_dir}"
+echo "tmp_build_dir=${tmp_build_dir}"
+echo "inst_dir=${inst_dir}"
+
+[ -d ${inst_dir} ] && [ -w ${inst_dir} ] && rm -rf ${inst_dir}
+[ -d ${tmp_build_dir} ] && [ -w ${tmp_build_dir} ] && rm -rf ${tmp_build_dir}
+
+${MKDIR_P} ${tmp_build_dir} && cd ${tmp_build_dir} && pwd || exit 1
+
+
+#----------------------------------------------------------------------------
+# utility functions
+download_src ()
+{
+  [ ${#} -eq 1 ] && local url=${1} || { echo "usage: download_src URL"; exit 1; }
+
+  ${CURL} -SL ${url} | ${TAR} zx
+}
+
+
+
 
 # Local Variables:
 # mode:shell-script

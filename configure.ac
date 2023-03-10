@@ -27,6 +27,7 @@ AC_PATH_PROGS(GIT,  [git])
 
 # "Precious" environment variables to control the build environment
 AC_ARG_VAR([GCC_VERSION], [requested GCC version. e.g. "10.4.0"])
+AC_ARG_VAR([ZLIB_VERSION], [requested Zlib version. e.g. "1.2.13"])
 AC_ARG_VAR([CMAKE_VERSION], [requested CMake version. e.g. "3.25.3"])
 AC_ARG_VAR([HDF5_VERSION], [requested HDF5 version. e.g. "1.10.6"])
 AC_ARG_VAR([MPICH_VERSION], [requested MPICH version. e.g. "3.4.3" (or "disabled")])
@@ -38,6 +39,7 @@ AC_ARG_VAR([TRILINOS_VERSION], [requested TRILINOS version. e.g. "13-0-1" (or "d
 #----------------------------------------------------------------------------
 # Preferred Default Versions (set-if-unset approach)
 GCC_VERSION="${GCC_VERSION:-9.5.0}"
+ZLIB_VERSION="${ZLIB_VERSION:-1.2.13}"
 CMAKE_VERSION="${CMAKE_VERSION:-3.25.3}"
 HDF5_VERSION="${HDF5_VERSION:-1.10.6}"
 MPICH_VERSION="${MPICH_VERSION:-3.4.3}"

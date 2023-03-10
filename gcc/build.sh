@@ -4,42 +4,12 @@
 # environment
 source ${BUILDCONF} || exit 1
 
-[[ "x${PKG}" != "x" ]] && [[ "x${PKG_VERSION}" != "x" ]] && echo "Building ${PKG}-${PKG_VERSION} from source..." \
-    || { echo "PKG, PKG_VERSION not set!!"; exit 1; }
-
-
-
-
-
-
-
-
-
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-#[ -f ${SCRIPTDIR}/../build_env.sh ] && . ${SCRIPTDIR}/../build_env.sh || \
-#    { echo "cannot locate ${SCRIPTDIR}/../build_env.sh"; exit 1; }
-
-
 
 
 #----------------------------------------------------------------------------
 # build
-inst_dir=${prefix}/${PKG}/${PKG_VERSION}
+curl -SL https://ftpmirror.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}.tar.gz | tar zx || exit 1
 
-#top_dir=${SCRIPTDIR}
-
-
-#rm -rf ${tmp_build_dir}
-#mkdir -p ${tmp_build_dir} || exit 1
-#cd ${tmp_build_dir} && pwd || exit 1
-
-#rm -rf ${inst_dir}
-
-wget https://ftpmirror.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}.tar.gz || exit 1
-
-exit 1
-
-tar zxf gcc-${PKG_VERSION}.tar.gz || exit 1
 cd ${tmp_build_dir}/gcc-${PKG_VERSION} && pwd || exit 1
 ./contrib/download_prerequisites || exit 1
 
