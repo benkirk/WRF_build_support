@@ -1,6 +1,12 @@
 # don't delete intermediate targets
 .SECONDARY:
 
+all:
+	$(MAKE) gcc/$(GCC_VERSION)/
+	$(MAKE) cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/
+	$(MAKE) zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/
+	$(MAKE) hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/
+	$(MAKE) mpich/$(MPICH_VERSION)-$(COMPILER_ID_STRING)/
 
 clobber:
 	git clean -xdf --exclude utils/autotools --exclude import
@@ -24,7 +30,7 @@ clobber:
           PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
 	  $(<)
 
-%/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/ %/$(MPICH_VERSION)-$(COMPILER_ID_STRING)/ %/$(OPENMPI_VERSION)-$(COMPILER_ID_STRING)/: %/build.sh gcc/$(GCC_VERSION)/config_env.sh
+%/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/ %/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/ %/$(MPICH_VERSION)-$(COMPILER_ID_STRING)/ %/$(OPENMPI_VERSION)-$(COMPILER_ID_STRING)/: %/build.sh gcc/$(GCC_VERSION)/config_env.sh
 	$(AM_V_GEN) \
 	  source gcc/$(GCC_VERSION)/config_env.sh && \
 	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \

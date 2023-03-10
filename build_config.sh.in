@@ -87,7 +87,15 @@ download_src ()
 {
   [ ${#} -eq 1 ] && local url=${1} || { echo "usage: download_src URL"; exit 1; }
 
-  ${CURL} -SL ${url} | ${TAR} zx
+  if [ "x${CURL}" != "x" ]; then
+    ${CURL} -SL ${url} | ${TAR} zx || exit 1
+
+  elif [ "x${WGET}" != "x" ]; then
+    ${WGET} --output-document - | ${TAR} zx || exit 1
+
+  else
+    exit 1
+  fi
 }
 
 

@@ -8,6 +8,8 @@ source ${BUILDCONF} || exit 1
 
 #----------------------------------------------------------------------------
 # build
+list_build_env
+
 echo "Implement Me!!" && exit 1
 
 # of the format https://zlib.net/zlib-1.2.13.tar.gz
