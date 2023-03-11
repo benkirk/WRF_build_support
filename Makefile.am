@@ -8,6 +8,7 @@ all:
 	$(MAKE) hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/
 	$(MAKE) $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/
 	$(MAKE) petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/
+	$(MAKE) libmesh/$(LIBMESH_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/
 
 clobber:
 	git clean -xdf --exclude utils/autotools --exclude import
@@ -44,7 +45,10 @@ clobber:
 	  $(<) || rm -rf $(@)
 
 # things that depend on the compiler and zlib
-%/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/: %/build.sh gcc/$(GCC_VERSION)/config_env.sh zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
+%/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/: \
+	                    %/build.sh \
+                            gcc/$(GCC_VERSION)/config_env.sh \
+                            zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
 	$(AM_V_GEN) \
 	  source gcc/$(GCC_VERSION)/config_env.sh && \
 	  source zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
@@ -56,11 +60,36 @@ clobber:
 	  $(<) || rm -rf $(@)
 
 # things that depend on compiler, MPI, maybe cmake
-%/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/ %/$(TRILINOS_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/: %/build.sh gcc/$(GCC_VERSION)/config_env.sh cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
+%/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/ %/$(TRILINOS_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/: \
+                            %/build.sh \
+                            gcc/$(GCC_VERSION)/config_env.sh \
+                            cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
+                            $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
 	$(AM_V_GEN) \
 	  source gcc/$(GCC_VERSION)/config_env.sh && \
 	  source cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
 	  source $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
+	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
+	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
+	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
+	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
+	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
+	  $(<) || rm -rf $(@)
+
+# things that depend on PETSc, compiler, MPI, maybe hdf5, cmake
+%/$(LIBMESH_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/ %/$(TRILINOS_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/: \
+                            %/build.sh \
+                            gcc/$(GCC_VERSION)/config_env.sh \
+                            cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
+                            hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
+                            $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
+                            petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/config_env.sh
+	$(AM_V_GEN) \
+	  source gcc/$(GCC_VERSION)/config_env.sh && \
+	  source cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
+	  source hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
+	  source $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
+	  source petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/config_env.sh && \
 	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
 	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
 	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
