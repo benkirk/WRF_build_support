@@ -108,7 +108,7 @@ clean_build_tmp_dirs ()
 list_build_env ()
 {
   module list
-  printenv | sort | uniq | ${EGREP} -v "_git|_ModuleTable_|__"
+  printenv | sort | uniq | ${EGREP} -v "_git|_ModuleTable|__"
 }
 
 
