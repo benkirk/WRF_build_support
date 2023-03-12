@@ -18,3 +18,6 @@ SUBDIRS = \
 
 git-clobber:
 	git clean -xdfn --exclude utils/autotools --exclude import
+
+monitor:
+	while true; do clear && ps auf && sleep 5 ; done
