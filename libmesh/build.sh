@@ -35,7 +35,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --enable-hdf5 --with-hdf5=${HDF5_ROOT} \
     --enable-petsc-required \
     PETSC_DIR=${PETSC_DIR} \
-    LIBS="-L${ZLIB_ROOT}/lib -lz" \
+    LIBS="-lm -L${ZLIB_ROOT}/lib -lz" \
     --disable-dap \
     || exit 1
 

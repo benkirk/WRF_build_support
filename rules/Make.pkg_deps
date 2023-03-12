@@ -96,6 +96,12 @@ $(PKG_VERSION)-$(MPI_ID)/build.log: build.sh \
 	    echo "  GEN -->  $(<): Done at $$(date)"; \
 	  fi
 
+################################################################################
+# augment the distclean rule
+distclean-local:
+	$(AM_V_at)rm -rf $(PKG_VERSION) $(PKG_VERSION)-*
+
+
 #----------------------------------------------------------------------------
 # Local Variables:
 # mode: makefile

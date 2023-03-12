@@ -5,7 +5,7 @@ AC_MSG_RESULT([-------- Configuring libmesh_build_support ----------])
 AC_MSG_RESULT([-----------------------------------------------------])
 
 AC_CONFIG_SRCDIR([configure.ac])
-
+AC_CHECK_FILE([configure.ac], [vpath_build=no], [vpath_build=yes])
 
 #top_srcdir=$(dirname $0)
 AC_CONFIG_AUX_DIR([build-aux])
@@ -14,8 +14,10 @@ AC_CONFIG_MACRO_DIR([m4])
 # # Print configuration info to the header file
 # AC_DEFINE_UNQUOTED(CONFIGURE_INFO, ["$0 $ac_configure_args"], [Configuration information.])
 #
-AM_INIT_AUTOMAKE([dist-bzip2 tar-pax subdir-objects color-tests 1.16 foreign])
-AM_SILENT_RULES(yes) dnl # use silent rules - automake 1.16
+AM_INIT_AUTOMAKE([dist-bzip2 tar-pax subdir-objects color-tests foreign])
+AM_SILENT_RULES(yes)
+
+AM_CONDITIONAL(VPATH_BUILD, test x${vpath_build} = xyes)
 
 AC_PROG_EGREP
 AC_PROG_MKDIR_P
@@ -24,7 +26,7 @@ AC_PATH_PROGS(TAR, [tar gtar])
 AC_PATH_PROGS(CURL, [curl])
 AC_PATH_PROGS(WGET, [wget])
 AC_PATH_PROGS(GIT, [git])
-AC_PATH_PROGS(PYTHON, [python python2])
+AC_PATH_PROGS(PYTHON, [python python2 python3])
 
 # "Precious" environment variables to control the build environment
 AC_ARG_VAR([GCC_VERSION], [requested GCC version. e.g. "10.4.0"])
