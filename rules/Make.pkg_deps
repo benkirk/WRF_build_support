@@ -2,7 +2,7 @@
 COMPILER_ID = $(COMPILER_ID_STRING)
 MPI_ID = $(MPI_ID_STRING)-$(COMPILER_ID_STRING)
 
-noinst_SCRIPTS = build.sh
+EXTRA_DIST = build.sh
 
 include $(top_srcdir)/rules/Make.config_envs
 
@@ -27,7 +27,7 @@ $(PKG_VERSION)/build.log: build.sh \
 	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@D)" \
 	  PKG_COMPILER_ID= \
 	  PKG_MPI_ID= \
-	  $(<) > build.out 2>&1 || { rm -rf $(@D); exit 1; }
+	  $(<) > build.out 2>&1 || { cat build.out; rm -rf $(@D); exit 1; }
 	$(AM_V_at)mv build.out $(@)
 	$(AM_V_at) \
 	  if $(AM_V_P); then \
@@ -57,7 +57,7 @@ $(PKG_VERSION)-$(COMPILER_ID)/build.log: build.sh \
 	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@D)" \
 	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
 	  PKG_MPI_ID= \
-	  $(<) > build.out 2>&1 || { rm -rf $(@D); exit 1; }
+	  $(<) > build.out 2>&1 || { cat build.out; rm -rf $(@D); exit 1; }
 	$(AM_V_at)mv build.out $(@)
 	$(AM_V_at) \
 	  if $(AM_V_P); then \
@@ -87,7 +87,7 @@ $(PKG_VERSION)-$(MPI_ID)/build.log: build.sh \
 	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@D)" \
 	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
 	  PKG_MPI_ID="$(MPI_ID_STRING)" \
-	  $(<) > build.out 2>&1 || { rm -rf $(@D); exit 1; }
+	  $(<) > build.out 2>&1 || { cat build.out; rm -rf $(@D); exit 1; }
 	$(AM_V_at)mv build.out $(@)
 	$(AM_V_at) \
 	  if $(AM_V_P); then \

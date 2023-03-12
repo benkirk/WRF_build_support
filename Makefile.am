@@ -10,7 +10,7 @@ SUBDIRS = \
 	gcc \
 	cmake \
 	zlib \
-	hdf5
+	hdf5 \
 	mpich \
 	openmpi \
 	petsc \

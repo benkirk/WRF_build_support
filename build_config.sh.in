@@ -38,7 +38,6 @@ TAR="@TAR@"
 # Build processes
 type nproc >/dev/null 2>&1 && MAKE_J_PROCS=$(nproc)
 MAKE_J_PROCS="${MAKE_J_PROCS:-6}"
-MAKE_J_PROCS=4
 MAKE_L_LOAD="$((${MAKE_J_PROCS} * 2)).0"
 MAKE_J_L="-j ${MAKE_J_PROCS} -l ${MAKE_L_LOAD}"
 
