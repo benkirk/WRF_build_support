@@ -12,7 +12,7 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 
 
 torture:
-	for conf in $(srcdir)/versions/*.sh; do \
+	for conf in $(abs_srcdir)/versions/*.sh; do \
 	  testdir="$(abs_builddir)/$${conf}/"; \
 	  $(MKDIR_P) $${testdir} && cd $${testdir} && pwd; \
 	  BUILDCONF="$${conf}" $(abs_srcdir)/torture.sh; \
