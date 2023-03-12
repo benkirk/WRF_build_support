@@ -17,7 +17,7 @@ cd ${tmp_build_dir}/${PKG}-${PKG_VERSION}* && pwd || exit 1
 
 unset CXX CC FC F77 LDFLAGS PETSC_DIR PETSC_ARCH
 case ${PKG_VERSION} in
-    3.?.*)
+    3.7*|3.8*|3.9*)
         # some options that fail: too old to find current sources compatible with older petsc
         # e.g.; Unable to locate commit: v2.14.0 in repository: .../petsc-3.9.4/petsc-3.9.4/arch-linux2-c-opt/externalpackages/git.hypre.
         ${PYTHON} ./configure \
