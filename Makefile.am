@@ -6,11 +6,15 @@
 .NOTPARALLEL:
 
 SUBDIRS = \
+	utils \
 	gcc \
 	cmake \
 	zlib \
-	hdf5 \
-	mpich
+	hdf5
+	mpich \
+	openmpi \
+	petsc \
+	libmesh
 
 git-clobber:
 	git clean -xdfn --exclude utils/autotools --exclude import

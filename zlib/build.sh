@@ -20,7 +20,7 @@ cd ${tmp_build_dir}/zlib-${PKG_VERSION} && pwd|| exit 1
     || exit 1
 #                LIBS="-lm -lz" \
 
-make -j ${MAKE_J_PROCS}  && make install || exit 1
+make ${MAKE_J_L}  && make install || exit 1
 
 
 

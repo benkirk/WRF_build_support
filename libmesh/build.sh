@@ -39,11 +39,11 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --disable-dap \
     || exit 1
 
-make -j ${MAKE_J_PROCS} && make install || exit 1
+make ${MAKE_J_L} && make install || exit 1
 
 # couple easy checks
-make -j ${MAKE_J_PROCS} -C contrib check
-make -j ${MAKE_J_PROCS} -C examples/introduction/introduction_ex4 check
+make ${MAKE_J_L} -C contrib check
+make ${MAKE_J_L} -C examples/introduction/introduction_ex4 check
 
 # save config.log for future repeatabilty / debugging
 [ -f config.log ] && cp config.log ${inst_dir}

@@ -56,6 +56,9 @@ MPI_FAMILY=""
 AS_IF([test "x${OPENMPI_VERSION}" != xdisabled], [MPI_ID_STRING="openmpi-${OPENMPI_VERSION}"; MPI_FAMILY="openmpi"; MPI_VERSION="${OPENMPI_VERSION}"])
 AS_IF([test "x${MPICH_VERSION}"   != xdisabled], [MPI_ID_STRING="mpich-${MPICH_VERSION}";     MPI_FAMILY="mpich";   MPI_VERSION="${MPICH_VERSION}"])
 
+AM_CONDITIONAL([MPICH_BUILD], [test x"${MPICH_VERSION}" != xdisabled])
+AM_CONDITIONAL([OPENMPI_BUILD], [test x"${OPENMPI_VERSION}" = xdisabled])
+
 AC_SUBST([COMPILER_ID_STRING])
 AC_SUBST([MPI_FAMILY])
 AC_SUBST([MPI_VERSION])
@@ -176,6 +179,7 @@ AC_SUBST([MPI_ID_STRING])
 #
 AC_CONFIG_FILES([
   Makefile
+  utils/Makefile
   gcc/Makefile
   cmake/Makefile
   zlib/Makefile

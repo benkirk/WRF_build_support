@@ -28,7 +28,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     LIBS="-L${ZLIB_ROOT}/lib -lz" \
     || exit 1
 
-make -j ${MAKE_J_PROCS} && make install-strip || exit 1
+make ${MAKE_J_L} && make install-strip || exit 1
 
 
 

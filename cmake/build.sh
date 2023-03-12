@@ -24,7 +24,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 --no-qt-gui \
     || exit 1
 
-make -j ${MAKE_J_PROCS} && make install || exit 1
+make ${MAKE_J_L} && make install || exit 1
 
 
 

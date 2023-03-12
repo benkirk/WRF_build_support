@@ -44,7 +44,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 --disable-libudev \
     || exit 1
 
-make -j ${MAKE_J_PROCS} && make install || exit 1
+make ${MAKE_J_L} && make install || exit 1
 
 # save config.log for future repeatabilty / debugging
 [ -f config.log ] && cp config.log ${inst_dir}
