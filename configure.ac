@@ -197,4 +197,4 @@ AC_MSG_RESULT([-----------------------------------------------------])
 AC_MSG_RESULT([------ Done Configuring libmesh_build_support -------])
 AC_MSG_RESULT([-----------------------------------------------------])
 
-# AX_SUMMARIZE_CONFIG
+AX_SUMMARIZE_CONFIG
