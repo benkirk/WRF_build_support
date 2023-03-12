@@ -12,7 +12,8 @@ list_build_env
 
 download_src https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PKG_VERSION}.tar.gz || exit 1
 
-cd ${tmp_build_dir}/${PKG}-${PKG_VERSION} && pwd || exit 1
+# throw the * on the end so we can download e.g. 3.13 which unpacks to 3.13.6
+cd ${tmp_build_dir}/${PKG}-${PKG_VERSION}* && pwd || exit 1
 
 unset CXX CC FC F77 LDFLAGS PETSC_DIR PETSC_ARCH
 case ${PKG_VERSION} in
