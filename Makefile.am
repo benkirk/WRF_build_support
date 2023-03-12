@@ -1,98 +1,16 @@
 # don't delete intermediate targets
 .SECONDARY:
 
-all:
-	$(MAKE) gcc/$(GCC_VERSION)/
-	$(MAKE) cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/
-	$(MAKE) zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/
-	$(MAKE) hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/
-	$(MAKE) $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/
-	$(MAKE) petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/
-	$(MAKE) libmesh/$(LIBMESH_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/
+# don't run any of these meta-rules in parallel when invoked with 'make -j'
+# (for example, the gcc build rule itself invokes make -j.  And it needs to complete before zlib.)
+.NOTPARALLEL:
 
-clobber:
-	git clean -xdf --exclude utils/autotools --exclude import
+SUBDIRS = \
+	gcc \
+	cmake \
+	zlib \
+	hdf5 \
+	mpich
 
-
-# gcc/$(GCC_VERSION)/.dirstamp: gcc/build.sh build_config.sh
-# 	$(AM_V_GEN)$(MKDIR_P) $(@D)
-# 	$(AM_V_at)echo "Silly rule for $@ $(@D) $(COMPILER_ID_STRING) $(MPI_ID_STRING) PKG=$(<D) PKG_VERSION=${GCC_VERSION}"
-# 	$(AM_V_at)echo "abs_top_builddir=$(abs_top_builddir)"
-# 	$(AM_V_at)touch $@
-
-
-%/config_env.sh: %
-	$(MAKE) $(@D)
-
-# building gcc
-%/$(GCC_VERSION)/: %/build.sh
-	$(AM_V_GEN) \
-	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
-          PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
-          PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2)" \
-          PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
-	  $(<) || rm -rf $(@)
-
-# things that depend on the compiler only
-%/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/ %/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/ %/$(MPICH_VERSION)-$(COMPILER_ID_STRING)/ %/$(OPENMPI_VERSION)-$(COMPILER_ID_STRING)/: %/build.sh gcc/$(GCC_VERSION)/config_env.sh
-	$(AM_V_GEN) \
-	  source gcc/$(GCC_VERSION)/config_env.sh && \
-	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
-	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
-	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
-	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
-	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
-	  $(<) || rm -rf $(@)
-
-# things that depend on the compiler and zlib
-%/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/: \
-	                    %/build.sh \
-                            gcc/$(GCC_VERSION)/config_env.sh \
-                            zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
-	$(AM_V_GEN) \
-	  source gcc/$(GCC_VERSION)/config_env.sh && \
-	  source zlib/$(ZLIB_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
-	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
-	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
-	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
-	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
-	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
-	  $(<) || rm -rf $(@)
-
-# things that depend on compiler, MPI, maybe cmake
-%/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/ %/$(TRILINOS_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/: \
-                            %/build.sh \
-                            gcc/$(GCC_VERSION)/config_env.sh \
-                            cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
-                            $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh
-	$(AM_V_GEN) \
-	  source gcc/$(GCC_VERSION)/config_env.sh && \
-	  source cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
-	  source $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
-	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
-	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
-	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
-	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
-	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
-	  $(<) || rm -rf $(@)
-
-# things that depend on PETSc, compiler, MPI, maybe hdf5, cmake
-%/$(LIBMESH_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/ %/$(TRILINOS_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/: \
-                            %/build.sh \
-                            gcc/$(GCC_VERSION)/config_env.sh \
-                            cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
-                            hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
-                            $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh \
-                            petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/config_env.sh
-	$(AM_V_GEN) \
-	  source gcc/$(GCC_VERSION)/config_env.sh && \
-	  source cmake/$(CMAKE_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
-	  source hdf5/$(HDF5_VERSION)-$(COMPILER_ID_STRING)/config_env.sh  && \
-	  source $(MPI_FAMILY)/$(MPI_VERSION)-$(COMPILER_ID_STRING)/config_env.sh && \
-	  source petsc/$(PETSC_VERSION)-$(MPI_ID_STRING)-$(COMPILER_ID_STRING)/config_env.sh && \
-	  BUILDCONF="$(abs_top_builddir)/build_config.sh" \
-	  PKG="$$(echo '$(@D)' | cut -d '/' -f1)" \
-	  PKG_VERSION="$$(echo '$(@D)' | cut -d '/' -f2 | cut -d '-' -f1)" \
-	  PKG_INSTALL_PREFIX="$(abs_builddir)/$(@)" \
-	  PKG_COMPILER_ID="$(COMPILER_ID_STRING)" \
-	  $(<) || rm -rf $(@)
+git-clobber:
+	git clean -xdfn --exclude utils/autotools --exclude import

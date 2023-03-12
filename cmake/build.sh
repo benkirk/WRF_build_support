@@ -13,7 +13,7 @@ list_build_env
 # dowload paths look like https://github.com/Kitware/CMake/releases/download/v3.24.3/cmake-3.24.3.tar.gz
 download_src https://github.com/Kitware/CMake/releases/download/v${PKG_VERSION}/cmake-${PKG_VERSION}.tar.gz
 
-cd ${tmp_build_dir}/${PKG}-${PKG_VERSION} || exit 1
+cd ${tmp_build_dir}/${PKG}-${PKG_VERSION} && pwd || exit 1
 
 mkdir ${tmp_build_dir}/${PKG}-build || exit 1
 cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1

@@ -8,7 +8,7 @@ source ${BUILDCONF} || exit 1
 
 #----------------------------------------------------------------------------
 # build
-curl -SL https://ftpmirror.gnu.org/gnu/${PKG}/${PKG}-${PKG_VERSION}/${PKG}-${PKG_VERSION}.tar.gz | tar zx || exit 1
+download_src https://ftpmirror.gnu.org/gnu/${PKG}/${PKG}-${PKG_VERSION}/${PKG}-${PKG_VERSION}.tar.gz
 
 cd ${tmp_build_dir}/${PKG}-${PKG_VERSION} && pwd || exit 1
 ./contrib/download_prerequisites || exit 1
@@ -24,7 +24,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 --disable-bootstrap \
     || exit 1
 
-make -j ${MAKE_J_PROCS} && make install-strip || exit 1
+make -j ${MAKE_J_PROCS} V=1 && make install-strip || exit 1
 
 # save config.log for future repeatabilty / debugging
 [ -f config.log ] && cp config.log ${inst_dir}

@@ -20,10 +20,11 @@ AM_SILENT_RULES(yes) dnl # use silent rules - automake 1.16
 AC_PROG_EGREP
 AC_PROG_MKDIR_P
 AC_PROG_LN_S
-AC_PATH_PROGS(TAR,  [tar gtar])
+AC_PATH_PROGS(TAR, [tar gtar])
 AC_PATH_PROGS(CURL, [curl])
 AC_PATH_PROGS(WGET, [wget])
-AC_PATH_PROGS(GIT,  [git])
+AC_PATH_PROGS(GIT, [git])
+AC_PATH_PROGS(PYTHON, [python python2])
 
 # "Precious" environment variables to control the build environment
 AC_ARG_VAR([GCC_VERSION], [requested GCC version. e.g. "10.4.0"])
@@ -175,6 +176,14 @@ AC_SUBST([MPI_ID_STRING])
 #
 AC_CONFIG_FILES([
   Makefile
+  gcc/Makefile
+  cmake/Makefile
+  zlib/Makefile
+  hdf5/Makefile
+  mpich/Makefile
+  openmpi/Makefile
+  petsc/Makefile
+  libmesh/Makefile
   build_config.sh
 ])
 
