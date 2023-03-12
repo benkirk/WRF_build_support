@@ -7,6 +7,8 @@ echo
 echo Package version............... : ${PACKAGE}-${VERSION}
 echo
 echo Install dir................... : ${prefix}
+echo Source dir.................... : ${abs_srcdir}
+echo Build dir..................... : ${abs_builddir}
 echo Build user.................... : ${USER}
 echo
 echo GCC_VERSION................... : ${GCC_VERSION}
