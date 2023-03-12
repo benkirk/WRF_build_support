@@ -5,6 +5,8 @@
 # (for example, the gcc build rule itself invokes make -j.  And it needs to complete before zlib.)
 .NOTPARALLEL:
 
+AM_MAKEFLAGS = --no-print-directory
+
 SUBDIRS = \
 	utils \
 	gcc \
