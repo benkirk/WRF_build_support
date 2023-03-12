@@ -19,7 +19,7 @@ case ${PKG_VERSION} in
     3.?.*)
         # some options that fail: too old to find current sources compatible with older petsc
         # e.g.; Unable to locate commit: v2.14.0 in repository: .../petsc-3.9.4/petsc-3.9.4/arch-linux2-c-opt/externalpackages/git.hypre.
-        ./configure \
+        ${PYTHON} ./configure \
             --with-debugging=0 --with-shared-libraries=0 \
             --with-ssl=0 \
             --with-spooles=1 --download-spooles=yes \
@@ -40,7 +40,7 @@ case ${PKG_VERSION} in
 
     # ML does not honor shared libs in PETSc 3.17...
     3.17.*)
-        ./configure \
+        ${PYTHON} ./configure \
             --with-debugging=0 --with-shared-libraries=0 \
             --with-ssl=0 \
             --with-szlib=0 \
@@ -62,7 +62,7 @@ case ${PKG_VERSION} in
         ;;
 
     *)
-        ./configure \
+        ${PYTHON} ./configure \
             --with-debugging=0 --with-shared-libraries=0 \
             --with-ssl=0 \
             --with-szlib=0 \
