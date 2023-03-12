@@ -21,7 +21,7 @@ echo "top_srcdir = ${top_srcdir}"
 # bootstrap
 cd ${top_srcdir} && pwd && ./autogen.sh || exit 1
 
-[ -f ${SCRIPTDIR}/autotools/config_env.sh ] && -f ${SCRIPTDIR}/autotools/config_env.sh
+[ -f ${SCRIPTDIR}/autotools/config_env.sh ] && source ${SCRIPTDIR}/autotools/config_env.sh
 
 which autoconf
 which automake
