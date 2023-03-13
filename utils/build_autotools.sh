@@ -7,7 +7,6 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     { echo "cannot locate ${SCRIPTDIR}/build_env.sh"; exit 1; }
 
 
-
 #----------------------------------------------------------------------------
 # build
 top_dir=${SCRIPTDIR}
@@ -25,8 +24,8 @@ declare -A versions
 versions[m4]=1.4.19
 versions[autoconf]=2.71
 versions[automake]=1.16.5
-versions[libtool]=2.4.6
-versions[make]=4.3
+#versions[libtool]=2.4.6
+#versions[make]=4.3
 
 # sample URLS:
 # https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.gz
@@ -37,17 +36,19 @@ versions[make]=4.3
 PATH=${inst_dir}/bin:$PATH
 
 #for PKG in "${!versions[@]}"; do
-for PKG in "m4" "autoconf" "automake" "libtool"; do
+for PKG in "m4" "autoconf" "automake"; do
 
     cd ${tmp_build_dir} && pwd || exit 1
 
     PKG_VERSION=${versions[${PKG}]}
     echo "building ${PKG}-${PKG_VERSION}"
 
-    # poor mans fallback - in case some mirrors fail (they do..)
-    for cnt in $(seq 1 10); do
-        curl -SL https://ftpmirror.gnu.org/gnu/${PKG}/${PKG}-${PKG_VERSION}.tar.gz | tar zx \
-            && break
+    # download the package, with curl or wget if either are availanle...
+    #   poor mans fallback - in case some mirrors fail (they do...)
+    url="https://ftpmirror.gnu.org/gnu/${PKG}/${PKG}-${PKG_VERSION}.tar.gz"
+    for try_cnt in $(seq 1 10); do
+        curl -sSL ${url} | tar zx && break
+        wget ${url} --no-verbose --output-document - | tar zx && break
     done
 
     cd ${PKG}-${PKG_VERSION} || exit 1
