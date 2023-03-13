@@ -24,7 +24,7 @@ declare -A versions
 versions[m4]=1.4.19
 versions[autoconf]=2.71
 versions[automake]=1.16.5
-#versions[libtool]=2.4.6
+versions[libtool]=2.4.6
 #versions[make]=4.3
 
 # sample URLS:
@@ -36,7 +36,7 @@ versions[automake]=1.16.5
 PATH=${inst_dir}/bin:$PATH
 
 #for PKG in "${!versions[@]}"; do
-for PKG in "m4" "autoconf" "automake"; do
+for PKG in "m4" "autoconf" "automake" "libtool"; do
 
     cd ${tmp_build_dir} && pwd || exit 1
 
