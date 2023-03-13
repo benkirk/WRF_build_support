@@ -16,7 +16,8 @@ SUBDIRS = \
 	mpich \
 	openmpi \
 	petsc \
-	libmesh
+	libmesh \
+	trilinos
 
 git-clobber:
 	git clean -xdfn --exclude utils/autotools --exclude import

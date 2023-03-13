@@ -81,6 +81,7 @@ AC_CONFIG_FILES([
   openmpi/Makefile
   petsc/Makefile
   libmesh/Makefile
+  trilinos/Makefile
   build_config.sh
 ])
 

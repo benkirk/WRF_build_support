@@ -19,6 +19,7 @@ echo MPICH_VERSION................. : ${MPICH_VERSION}
 echo OPENMPI_VERSION............... : ${OPENMPI_VERSION}
 echo PETSC_VERSION................. : ${PETSC_VERSION}
 echo LIBMESH_VERSION............... : ${LIBMESH_VERSION}
+echo TRILINOS_VERSION.............. : ${TRILINOS_VERSION}
 ######################################################################################
 echo
 echo '-------------------------------------------------------------------------------'
