@@ -27,8 +27,8 @@ source ${abs_top_builddir}/libmesh/@LIBMESH_VERSION@-@MPI_ID_STRING@-@COMPILER_I
 source ${abs_top_builddir}/trilinos/@TRILINOS_VERSION@-@MPI_ID_STRING@-@COMPILER_ID_STRING@/config_env.sh
 
 # optionally, autotools
-if [ -f ${abs_top_builddir}/autotools/suite/config_env.sh ]; then
-    source ${abs_top_builddir}/autotools/suite/config_env.sh >/dev/null 2>&1
-elif [ -f ${abs_top_srcdir}/autotools/suite/config_env.sh ]; then
-    source ${abs_top_srcdir}/autotools/suite/config_env.sh >/dev/null 2>&1
+if [ -f ${abs_top_builddir}/utils/autotools/config_env.sh ]; then
+    source ${abs_top_builddir}/utils/autotools/config_env.sh >/dev/null 2>&1
+elif [ -f ${abs_top_srcdir}/utils/autotools/config_env.sh ]; then
+    source ${abs_top_srcdir}/utils/autotools/config_env.sh >/dev/null 2>&1
 fi
