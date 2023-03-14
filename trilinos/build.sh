@@ -15,7 +15,15 @@ cd ${tmp_build_dir}/Trilinos-trilinos-release-${PKG_VERSION} && pwd && pkg_src_d
 
 mkdir -p ${tmp_build_dir}/build && cd ${tmp_build_dir}/build && pwd || exit 1
 
-# if we build PETSc first, we can use its from-source compiled BLAS/LAPACK...
+
+# BLAS/LAPACK:
+# if we build PETSc first, we can use its from-source compiled BLAS/LAPACK if it exists...
+[ "x${PETSC_DIR}" != "x" ] && [ -f ${PETSC_DIR}/lib/libfblas.a ] && blas="${PETSC_DIR}/lib/libfblas.a"
+[ "x${PETSC_DIR}" != "x" ] && [ -f ${PETSC_DIR}/lib/libflapack.a ] && lapack="${PETSC_DIR}/lib/libflapack.a"
+# if we have a static blas/lapack on the host, use it
+[ -f /lib64/libblas.a ] && blas="/lib64/libblas.a"
+[ -f /lib64/liblapack.a ] && lapack="/lib64/liblapack.a"
+
 cmake \
     -DCMAKE_INSTALL_PREFIX=${inst_dir}\
     -DTPL_ENABLE_MPI=ON \
@@ -24,8 +32,8 @@ cmake \
     -DTrilinos_ENABLE_Kokkos=OFF \
     -DBUILD_SHARED_LIBS=OFF \
     -DTPL_ENABLE_DLlib=OFF \
-    -DTPL_ENABLE_BLAS=ON -DTPL_BLAS_LIBRARIES=${PETSC_DIR}/lib/libfblas.a \
-    -DTPL_ENABLE_LAPACK=ON -DTPL_LAPACK_LIBRARIES=${PETSC_DIR}/lib/libflapack.a \
+    -DTPL_ENABLE_BLAS=ON -DTPL_BLAS_LIBRARIES=${blas} \
+    -DTPL_ENABLE_LAPACK=ON -DTPL_LAPACK_LIBRARIES=${lapack} \
     ${pkg_src_dir} \
     || exit 1
 

@@ -16,6 +16,11 @@ download_src https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PKG_VER
 cd ${tmp_build_dir}/${PKG}-${PKG_VERSION}* && pwd || exit 1
 
 unset CXX CC FC F77 LDFLAGS PETSC_DIR PETSC_ARCH
+
+# BLAS/LAPACK:
+blaslapack_option="--download-fblaslapack=1"
+[ -f /lib64/libblas.a ] && [ -f /lib64/liblapack.a ] && blaslapack_option="--with-blas-lib=/lib64/libblas.a --with-lapack-lib=/lib64/liblapack.a"
+
 case ${PKG_VERSION} in
     3.7*|3.8*|3.9*)
         # some options that fail: too old to find current sources compatible with older petsc
@@ -28,7 +33,7 @@ case ${PKG_VERSION} in
             --with-suitesparse=1 --download-suitesparse=yes \
             --with-superlu=1 --download-superlu=yes \
             --with-scalapack=1 --download-scalapack=yes \
-            --download-fblaslapack=1 --with-x=0 \
+            ${blaslapack_option} --with-x=0 \
             --prefix=${inst_dir} \
             --with-cc=$(which mpicc) \
             --with-cxx=$(which mpicxx) \
@@ -50,7 +55,7 @@ case ${PKG_VERSION} in
             --with-suitesparse=1 --download-suitesparse=yes \
             --with-superlu=1 --download-superlu=yes \
             --with-scalapack=1 --download-scalapack=yes \
-            --download-fblaslapack=1 --with-x=0 \
+            ${blaslapack_option} --with-x=0 \
             --with-hypre=1 --download-hypre=yes \
             --prefix=${inst_dir} \
             --with-cc=$(which mpicc) \
@@ -72,7 +77,7 @@ case ${PKG_VERSION} in
             --with-suitesparse=1 --download-suitesparse=yes \
             --with-superlu=1 --download-superlu=yes \
             --with-scalapack=1 --download-scalapack=yes \
-            --download-fblaslapack=1 --with-x=0 \
+            ${blaslapack_option} --with-x=0 \
             --with-hypre=1 --download-hypre=yes \
             --prefix=${inst_dir} \
             --with-cc=$(which mpicc) \
