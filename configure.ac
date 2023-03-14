@@ -83,6 +83,7 @@ AC_CONFIG_FILES([
   libmesh/Makefile
   trilinos/Makefile
   build_config.sh
+  utils/use_stack.sh
 ])
 
 

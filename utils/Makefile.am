@@ -1,4 +1,15 @@
 ################################################################################
+# the 'use_stack.sh' script can be sourced to use the build environment.
+# is is generted by 'configure' and installed into the root of the
+# installation prefix by 'make install'
+
+confscriptdir = $(prefix)
+confscript_DATA = use_stack.sh
+#data_DATA = use_stack.sh
+
+
+
+################################################################################
 # useful sources, this will get them into 'make dist' but not install them...
 
 noinst_SCRIPTS = build_autotools.sh torture.sh
