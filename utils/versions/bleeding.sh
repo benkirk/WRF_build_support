@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------
 # Preferred Versions for this build
-export GCC_VERSION="10.4.0"
+export GCC_VERSION="12.2.0"
 export ZLIB_VERSION="1.2.13"
 export CMAKE_VERSION="3.25.3"
 export HDF5_VERSION="1.12.2"

@@ -45,7 +45,7 @@ case ${PKG_VERSION} in
         ;;
 
     # ML does not honor shared libs in PETSc 3.17...
-    3.17.*)
+    3.17*)
         ${PYTHON} ./configure \
             --with-debugging=0 --with-shared-libraries=0 \
             --with-ssl=0 \
