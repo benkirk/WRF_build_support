@@ -13,11 +13,10 @@ SUBDIRS = \
 	cmake \
 	zlib \
 	hdf5 \
+	netcdf-c \
+	netcdf-fortran \
 	mpich \
-	openmpi \
-	petsc \
-	libmesh \
-	trilinos
+	openmpi
 
 git-clobber:
 	git clean -xdfn --exclude utils/autotools --exclude import

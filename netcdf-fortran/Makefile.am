@@ -1,8 +1,9 @@
 ################################################################################
-PKG = netcdf
-PKG_VERSION = $(NETCDF_C_VERSION)
+PKG = netcdf-fortran
+PKG_VERSION = $(NETCDF_FORTRAN_VERSION)
+
 PKG_BUILD_DEPS = $(top_builddir)/gcc/$(GCC_VERSION)/config_env.sh \
-                 $(top_builddir)/hdf5/$(HDF5_VERSION)-$(COMPILER_ID)/config_env.sh
+                 $(top_builddir)/netcdf-c/$(NETCDF_C_VERSION)-$(COMPILER_ID)/config_env.sh
 
 include $(top_srcdir)/rules/Make.pkg_deps
 

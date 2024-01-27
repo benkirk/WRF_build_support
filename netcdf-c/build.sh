@@ -11,8 +11,7 @@ source ${BUILDCONF} || exit 1
 list_build_env
 
 
-download_src https://github.com/Unidata/netcdf-c/archive/v${NETCDF_C_VERSION}.tar.gz
-download_src https://github.com/Unidata/netcdf-fortran/archive/v${NETCDF_FORTRAN_VERSION}.tar.gz
+download_src https://github.com/Unidata/${PKG}/archive/v${NETCDF_C_VERSION}.tar.gz
 
 cd ${tmp_build_dir}/${PKG}-${PKG_VERSION} && pwd || exit 1
 

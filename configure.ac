@@ -82,7 +82,8 @@ AC_CONFIG_FILES([
   cmake/Makefile
   zlib/Makefile
   hdf5/Makefile
-  netcdf/Makefile
+  netcdf-c/Makefile
+  netcdf-fortran/Makefile
   mpich/Makefile
   openmpi/Makefile
   build_config.sh
