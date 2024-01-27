@@ -20,8 +20,9 @@ cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1
 
 ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --prefix=${inst_dir} \
-    --enable-static --disable-shared \
-    LIBS="-L${ZLIB_ROOT}/lib -lz" \
+    --disable-static --enable-shared \
+    LDFLAGS="-L${NETCDF_C_ROOT}/lib -lnetcdf" \
+    CPPFLAGS="-I${NETCDF_C_ROOT}/include" \
     || exit 1
 
 make ${MAKE_J_L} && make install-strip || exit 1
@@ -39,7 +40,7 @@ cat <<EOF > config_env.sh
 export NETCDFF_VERSION=${PKG_VERSION}
 export NETCDFF_ROOT=${inst_dir}
 
-#export LD_LIBRARY_PATH=${inst_dir}/lib:\${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${inst_dir}/lib:\${LD_LIBRARY_PATH}
 
 PATH=${inst_dir}/bin:\${PATH}
 

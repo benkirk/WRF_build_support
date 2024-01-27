@@ -20,8 +20,8 @@ cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1
 
 ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --prefix=${inst_dir} \
-    --enable-static --disable-shared \
-    --enable-hl --enable-cxx --enable-fortran \
+    --disable-static --enable-shared \
+    --enable-hl --disable-cxx --enable-fortran \
     --disable-parallel \
     --disable-dependency-tracking \
     --with-szlib=no \
@@ -43,7 +43,7 @@ cat <<EOF > config_env.sh
 export HDF5_VERSION=${PKG_VERSION}
 export HDF5_ROOT=${inst_dir}
 
-#export LD_LIBRARY_PATH=${inst_dir}/lib:\${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${inst_dir}/lib:\${LD_LIBRARY_PATH}
 
 PATH=${inst_dir}/bin:\${PATH}
 
