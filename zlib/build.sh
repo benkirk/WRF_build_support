@@ -9,7 +9,8 @@ source ${BUILDCONF} || exit 1
 #----------------------------------------------------------------------------
 # build
 # of the format https://zlib.net/zlib-1.2.13.tar.gz
-download_src https://zlib.net/zlib-${PKG_VERSION}.tar.gz
+#download_src https://zlib.net/zlib-${PKG_VERSION}.tar.gz
+download_src https://github.com/madler/zlib/releases/download/v${PKG_VERSION}/zlib-${PKG_VERSION}.tar.gz
 
 
 cd ${tmp_build_dir}/zlib-${PKG_VERSION} && pwd|| exit 1
