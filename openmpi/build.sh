@@ -26,7 +26,7 @@ case ${PKG_VERSION} in
                         --prefix=${inst_dir} \
                         --with-pmix=internal \
                         --with-hwloc=internal \
-                        --enable-static --disable-shared \
+                        --disable-static --enable-shared \
                         --disable-dependency-tracking \
             || exit 1
         ;;

@@ -34,12 +34,14 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 FFLAGS=${FFLAGS} \
                 --prefix=${inst_dir} \
                 --disable-dependency-tracking \
-                --with-device=ch3 \
+                --with-wrapper-dl-type=none \
+                --with-device=ch4:ofi \
+                --enable-fortran
                 --with-mpl-prefix=embedded \
                 --with-zm-prefix=embedded \
                 --with-yaksa-prefix=embedded \
                 --with-hwloc-prefix=embedded \
-                --enable-static --disable-shared \
+                --disable-static --enable-shared \
                 --disable-libxml2 \
                 --disable-libudev \
     || exit 1
