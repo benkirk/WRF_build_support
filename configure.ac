@@ -1,7 +1,7 @@
-AC_INIT([libmesh_build_support], [0.0.1], [benkirk@ucar.edu])
+AC_INIT([wrf_build_support], [0.0.1], [benkirk@ucar.edu])
 
 AC_MSG_RESULT([-----------------------------------------------------])
-AC_MSG_RESULT([-------- Configuring libmesh_build_support ----------])
+AC_MSG_RESULT([----------- Configuring WRF_build_support -----------])
 AC_MSG_RESULT([-----------------------------------------------------])
 
 AC_CONFIG_SRCDIR([configure.ac])
@@ -35,21 +35,23 @@ AC_ARG_VAR([CMAKE_VERSION], [requested CMake version. e.g. "3.25.3"])
 AC_ARG_VAR([HDF5_VERSION], [requested HDF5 version. e.g. "1.10.6"])
 AC_ARG_VAR([MPICH_VERSION], [requested MPICH version. e.g. "3.4.3" (or "disabled")])
 AC_ARG_VAR([OPENMPI_VERSION], [requested OPENMPI version. e.g. "4.1.4" (or "disabled")])
-AC_ARG_VAR([PETSC_VERSION], [requested PETSC version. e.g. "3.16.6" (or "disabled")])
-AC_ARG_VAR([LIBMESH_VERSION], [requested LIBMESH version. e.g. "4.1.4" (or "disabled")])
-AC_ARG_VAR([TRILINOS_VERSION], [requested TRILINOS version. e.g. "13-0-1" (or "disabled")])
+#AC_ARG_VAR([PETSC_VERSION], [requested PETSC version. e.g. "3.16.6" (or "disabled")])
+#AC_ARG_VAR([LIBMESH_VERSION], [requested LIBMESH version. e.g. "4.1.4" (or "disabled")])
+#AC_ARG_VAR([TRILINOS_VERSION], [requested TRILINOS version. e.g. "13-0-1" (or "disabled")])
 
 #----------------------------------------------------------------------------
 # Preferred Default Versions (set-if-unset approach)
-GCC_VERSION="${GCC_VERSION:-9.5.0}"
+GCC_VERSION="${GCC_VERSION:-6.5.0}"
 ZLIB_VERSION="${ZLIB_VERSION:-1.2.13}"
-CMAKE_VERSION="${CMAKE_VERSION:-3.25.3}"
-HDF5_VERSION="${HDF5_VERSION:-1.10.6}"
+CMAKE_VERSION="${CMAKE_VERSION:-disabled}"
+HDF5_VERSION="${HDF5_VERSION:-1.10.11}"
+NETCDF_C_VERSION="${NETCDF_C_VERSION:-4.9.2}"
+NETCDF_FORTRAN_VERSION="${NETCDF_FORTRAN_VERSION:-4.6.1}"
 MPICH_VERSION="${MPICH_VERSION:-3.4.3}"
 OPENMPI_VERSION="${OPENMPI_VERSION:-disabled}"
-PETSC_VERSION="${PETSC_VERSION:-3.13}"
-LIBMESH_VERSION="${LIBMESH_VERSION:-1.6.2}"
-TRILINOS_VERSION="${TRILINOS_VERSION:-13-0-1}"
+#PETSC_VERSION="${PETSC_VERSION:-3.13}"
+#LIBMESH_VERSION="${LIBMESH_VERSION:-1.6.2}"
+#TRILINOS_VERSION="${TRILINOS_VERSION:-13-0-1}"
 
 COMPILER_ID_STRING="gcc-${GCC_VERSION}"
 
@@ -58,6 +60,7 @@ MPI_FAMILY=""
 AS_IF([test "x${OPENMPI_VERSION}" != xdisabled], [MPI_ID_STRING="openmpi-${OPENMPI_VERSION}"; MPI_FAMILY="openmpi"; MPI_VERSION="${OPENMPI_VERSION}"])
 AS_IF([test "x${MPICH_VERSION}"   != xdisabled], [MPI_ID_STRING="mpich-${MPICH_VERSION}";     MPI_FAMILY="mpich";   MPI_VERSION="${MPICH_VERSION}"])
 
+AM_CONDITIONAL([CMAKE_BUILD], [test x"${CMAKE_VERSION}" != xdisabled])
 AM_CONDITIONAL([MPICH_BUILD], [test x"${MPICH_VERSION}" != xdisabled])
 AM_CONDITIONAL([OPENMPI_BUILD], [test x"${OPENMPI_VERSION}" != xdisabled])
 
@@ -77,11 +80,9 @@ AC_CONFIG_FILES([
   cmake/Makefile
   zlib/Makefile
   hdf5/Makefile
+  netcdf/Makefile
   mpich/Makefile
   openmpi/Makefile
-  petsc/Makefile
-  libmesh/Makefile
-  trilinos/Makefile
   build_config.sh
   utils/use_stack.sh
 ])
@@ -89,7 +90,7 @@ AC_CONFIG_FILES([
 
 AC_OUTPUT
 AC_MSG_RESULT([-----------------------------------------------------])
-AC_MSG_RESULT([------ Done Configuring libmesh_build_support -------])
+AC_MSG_RESULT([--------- Done Configuring WRF_build_support --------])
 AC_MSG_RESULT([-----------------------------------------------------])
 
 AX_SUMMARIZE_CONFIG

@@ -15,11 +15,10 @@ echo GCC_VERSION................... : ${GCC_VERSION}
 echo CMAKE_VERSION................. : ${CMAKE_VERSION}
 echo ZLIB_VERSION.................. : ${ZLIB_VERSION}
 echo HDF5_VERSION.................. : ${HDF5_VERSION}
+echo NETCDF_C_VERSION.............. : ${NETCDF_C_VERSION}
+echo NETCDF_FORTRAN_VERSION........ : ${NETCDF_FORTRAN_VERSION}
 echo MPICH_VERSION................. : ${MPICH_VERSION}
 echo OPENMPI_VERSION............... : ${OPENMPI_VERSION}
-echo PETSC_VERSION................. : ${PETSC_VERSION}
-echo LIBMESH_VERSION............... : ${LIBMESH_VERSION}
-echo TRILINOS_VERSION.............. : ${TRILINOS_VERSION}
 ######################################################################################
 echo
 echo '-------------------------------------------------------------------------------'
