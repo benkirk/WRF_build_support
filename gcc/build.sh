@@ -18,7 +18,7 @@ cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1
 
 ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 --prefix=${inst_dir} \
-                --enable-static --disable-shared \
+                --enable-static --enable-shared \
                 --enable-languages=c,c++,fortran \
                 --disable-multilib \
                 --disable-bootstrap \

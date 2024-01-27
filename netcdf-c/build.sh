@@ -20,7 +20,7 @@ cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1
 
 ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --prefix=${inst_dir} \
-    --disable-static --enable-shared \
+    --enable-static --enable-shared \
     --disable-libxml2 \
     --disable-dap \
     LIBS="-L${ZLIB_ROOT}/lib -lz" \

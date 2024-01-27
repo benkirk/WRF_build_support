@@ -20,7 +20,7 @@ cd ${tmp_build_dir}/${PKG}-build && pwd || exit 1
 
 ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --prefix=${inst_dir} \
-    --disable-static --enable-shared \
+    --enable-static --enable-shared \
     LDFLAGS="-L${NETCDF_C_ROOT}/lib -lnetcdf" \
     CPPFLAGS="-I${NETCDF_C_ROOT}/include" \
     || exit 1
