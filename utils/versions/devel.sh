@@ -1,11 +1,12 @@
 #----------------------------------------------------------------------------
-# Preferred Versions for this build
-export GCC_VERSION="10.4.0"       # checked versions 5.5.0 -> 11.3.0.  11.3 requires newer linkers and can be a problem on CentOS
-export ZLIB_VERSION="1.2.13"
-export CMAKE_VERSION="3.25.3"
-export HDF5_VERSION="1.10.6"
-export MPICH_VERSION="3.4.3"
-export OPENMPI_VERSION="disabled" #"4.1.5"   # checked versions 1.10.4 -> 4.1.4, versions 2x & 3x seem to required shared libs (see openmpi/build.sh)
-export PETSC_VERSION="3.13"     # checked versions 3.7.7 -> 3.16.6. (3.15+ fails to statically link on Centos with old AR.)
-export LIBMESH_VERSION="1.6.2"   # checked versions 1.2.1, 1.4.2, 1.6.2
-export TRILINOS_VERSION="13-0-1"
+# Preferred Versions for this buil
+unset GCC_VERSION
+unset ZLIB_VERSION
+unset CMAKE_VERSION
+unset HDF5_VERSION
+unset NETCDF_C_VERSION
+unset NETCDF_FORTRAN_VERSION
+unset MPICH_VERSION
+unset OPENMPI_VERSION
+
+export GCC_VERSION="8.5.0"       # checked versions 5.5.0 -> 11.3.0.  11.3 require

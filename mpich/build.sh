@@ -36,8 +36,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
                 --disable-dependency-tracking \
                 --with-wrapper-dl-type=none \
                 --with-device=ch4:ofi \
-                --enable-fortran
-                --with-mpl-prefix=embedded \
+                --enable-fortran --disable-cxx \
                 --with-zm-prefix=embedded \
                 --with-yaksa-prefix=embedded \
                 --with-hwloc-prefix=embedded \

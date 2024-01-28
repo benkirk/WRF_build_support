@@ -23,6 +23,7 @@ ${tmp_build_dir}/${PKG}-${PKG_VERSION}/configure \
     --enable-static --enable-shared \
     --disable-libxml2 \
     --disable-dap \
+    --disable-byterange \
     LIBS="-L${ZLIB_ROOT}/lib -lz" \
     LDFLAGS="-L${HDF5_ROOT}/lib" \
     CPPFLAGS="-I${HDF5_ROOT}/include" \
